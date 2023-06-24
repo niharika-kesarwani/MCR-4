@@ -7,6 +7,7 @@ const {
   HANDLE_UPVOTE,
   HANDLE_DOWNVOTE,
   SELECT_POST,
+  HANDLE_BOOKMARK,
 } = forumConstants;
 
 export const forumReducer = (state, action) => {
@@ -75,6 +76,28 @@ export const forumReducer = (state, action) => {
         ...state,
         selectedPost: state?.originalObject?.posts?.find(
           ({ postId }) => postId === action?.item?.postId
+        ),
+      };
+    case HANDLE_BOOKMARK:
+      return {
+        ...state,
+        originalObject: {
+          ...state?.originalObject,
+          posts: state?.originalObject?.posts?.map((post) =>
+            post?.postId === action?.item?.postId
+              ? { ...post, isBookmarked: !post?.isBookmarked }
+              : post
+          ),
+        },
+        originalPosts: state?.originalObject?.posts?.map((post) =>
+          post?.postId === action?.item?.postId
+            ? { ...post, isBookmarked: !post?.isBookmarked }
+            : post
+        ),
+        displayPosts: state?.originalObject?.posts?.map((post) =>
+          post?.postId === action?.item?.postId
+            ? { ...post, isBookmarked: !post?.isBookmarked }
+            : post
         ),
       };
     default:

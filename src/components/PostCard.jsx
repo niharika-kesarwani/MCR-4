@@ -4,6 +4,7 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import { useForum } from "../main";
 import { forumConstants } from "../constants/forum-constants";
 
@@ -20,9 +21,10 @@ export const PostCard = ({ postData }) => {
     tags,
     createdAt,
     comments,
+    isBookmarked,
   } = postData;
   const { setForum } = useForum();
-  const { HANDLE_UPVOTE, HANDLE_DOWNVOTE } = forumConstants;
+  const { HANDLE_UPVOTE, HANDLE_DOWNVOTE, HANDLE_BOOKMARK } = forumConstants;
 
   return (
     <li className="flex gap-5 bg-white p-4" key={postId}>
@@ -33,7 +35,10 @@ export const PostCard = ({ postData }) => {
               ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400 hover:cursor-pointer"
               : "flex h-8 w-8 items-center justify-center rounded-full hover:cursor-pointer"
           }
-          onClick={() => setForum({ payload: HANDLE_UPVOTE, item: postData })}
+          onClick={(e) => {
+            e.stopPropagation();
+            setForum({ payload: HANDLE_UPVOTE, item: postData });
+          }}
         >
           <ArrowDropUpOutlinedIcon />
         </div>
@@ -44,7 +49,10 @@ export const PostCard = ({ postData }) => {
               ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400 hover:cursor-pointer"
               : "flex h-8 w-8 items-center justify-center rounded-full hover:cursor-pointer"
           }
-          onClick={() => setForum({ payload: HANDLE_DOWNVOTE, item: postData })}
+          onClick={(e) => {
+            e.stopPropagation();
+            setForum({ payload: HANDLE_DOWNVOTE, item: postData });
+          }}
         >
           <ArrowDropDownOutlinedIcon />
         </div>
@@ -80,8 +88,17 @@ export const PostCard = ({ postData }) => {
           <div>
             <ShareOutlinedIcon />
           </div>
-          <div className="hover:cursor-pointer">
-            <BookmarkBorderOutlinedIcon />
+          <div
+            className="hover:cursor-pointer"
+            onClick={() =>
+              setForum({ payload: HANDLE_BOOKMARK, item: postData })
+            }
+          >
+            {isBookmarked ? (
+              <BookmarkOutlinedIcon />
+            ) : (
+              <BookmarkBorderOutlinedIcon />
+            )}
           </div>
         </div>
       </div>
