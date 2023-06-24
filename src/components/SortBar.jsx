@@ -6,7 +6,7 @@ export const SortBar = () => {
     forum: { selectedSort },
     setForum,
   } = useForum();
-  const { CHANGE_SELECTED_SORT, CHANGE_DISPLAY_POSTS } = forumConstants;
+  const { CHANGE_SELECTED_SORT } = forumConstants;
 
   return (
     <div className="flex w-full max-w-fit flex-col gap-5 px-5">
@@ -17,10 +17,9 @@ export const SortBar = () => {
             ? "flex h-10 items-center rounded border bg-pink-400 px-5"
             : "flex h-10 items-center rounded border bg-gray-200 px-5 hover:cursor-pointer hover:bg-pink-400"
         }
-        onClick={() => {
-          setForum({ payload: CHANGE_SELECTED_SORT, item: "Latest Posts" });
-          setForum({ payload: CHANGE_DISPLAY_POSTS });
-        }}
+        onClick={() =>
+          setForum({ payload: CHANGE_SELECTED_SORT, item: "Latest Posts" })
+        }
       >
         <div></div>
         <div>Latest Posts</div>
@@ -31,13 +30,12 @@ export const SortBar = () => {
             ? "flex h-10 items-center rounded border bg-pink-400 px-5"
             : "flex h-10 items-center rounded border bg-gray-200 px-5 hover:cursor-pointer hover:bg-pink-400"
         }
-        onClick={() => {
+        onClick={() =>
           setForum({
             payload: CHANGE_SELECTED_SORT,
             item: "Most Upvoted Posts",
-          });
-          setForum({ payload: CHANGE_DISPLAY_POSTS });
-        }}
+          })
+        }
       >
         <div></div>
         <div>Most Upvoted Posts</div>
