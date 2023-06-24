@@ -1,6 +1,6 @@
 export const SortBar = () => {
   return (
-    <div className="flex w-full flex-col gap-5 px-5">
+    <div className="flex w-full max-w-fit flex-col gap-5 px-5">
       <div className="font-bold">Sort By</div>
       <div className="hover: flex h-10 cursor-pointer items-center rounded border bg-gray-200 px-5 hover:bg-pink-400">
         <div></div>

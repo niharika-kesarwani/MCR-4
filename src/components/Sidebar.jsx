@@ -8,7 +8,7 @@ export const Sidebar = () => {
   const { username, name, picUrl } = forumData;
 
   return (
-    <div className="flex w-full flex-col justify-between gap-5">
+    <div className="flex flex-col justify-between gap-5 pr-10">
       <div className="flex flex-col gap-5">
         <div className="flex items-center gap-x-3">
           <HomeOutlinedIcon />
