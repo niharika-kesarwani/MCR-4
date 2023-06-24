@@ -4,6 +4,8 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import { useForum } from "../main";
+import { forumConstants } from "../constants/forum-constants";
 
 export const PostCard = ({ postData }) => {
   const {
@@ -19,6 +21,8 @@ export const PostCard = ({ postData }) => {
     createdAt,
     comments,
   } = postData;
+  const { setForum } = useForum();
+  const { HANDLE_UPVOTE, HANDLE_DOWNVOTE } = forumConstants;
 
   return (
     <li className="flex gap-5 bg-white p-4" key={postId}>
@@ -26,21 +30,21 @@ export const PostCard = ({ postData }) => {
         <div
           className={
             upvotes > downvotes
-              ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400"
-              : "flex h-8 w-8 items-center justify-center rounded-full"
+              ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400 hover:cursor-pointer"
+              : "flex h-8 w-8 items-center justify-center rounded-full hover:cursor-pointer"
           }
+          onClick={() => setForum({ payload: HANDLE_UPVOTE, item: postData })}
         >
           <ArrowDropUpOutlinedIcon />
         </div>
-        <div className="font-bold text-pink-500">
-          {Math.abs(upvotes - downvotes)}
-        </div>
+        <div className="font-bold text-pink-500">{upvotes - downvotes}</div>
         <div
           className={
             downvotes > upvotes
-              ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400"
-              : "flex h-8 w-8 items-center justify-center rounded-full"
+              ? "flex h-8 w-8 items-center justify-center rounded-full bg-pink-400 hover:cursor-pointer"
+              : "flex h-8 w-8 items-center justify-center rounded-full hover:cursor-pointer"
           }
+          onClick={() => setForum({ payload: HANDLE_DOWNVOTE, item: postData })}
         >
           <ArrowDropDownOutlinedIcon />
         </div>
@@ -58,12 +62,12 @@ export const PostCard = ({ postData }) => {
           <div className="font-bold">{post}</div>
           <div className="flex gap-3">
             {tags?.map((tag, index) => (
-              <li
+              <div
                 key={index}
                 className="flex justify-center rounded-lg  border bg-pink-200 px-2 py-0.5 text-center text-sm font-bold text-pink-400"
               >
                 {tag}
-              </li>
+              </div>
             ))}
           </div>
           <div className="text-sm">{postDescription}</div>
